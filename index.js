@@ -1,7 +1,7 @@
 //what are we doing? making a bank account? 
 
 class BankAccount {
-    constructor(accountNumber, owner, transactions) {
+    constructor(accountNumber, owner) {
         this.accountNumber = accountNumber;
         this.owner = owner;
         this.transactions = [];
@@ -15,17 +15,22 @@ class BankAccount {
         return sum;
     }
 
-    charge(payee, amt) {
-        
+    charge(amt, payee) {
+        const cheese = new Transaction(amt, payee);
+        this.transactions.push(cheese);
     }
 
     deposit(amt) {
         if (amt > 0) {
-            return balance + amt;
+            const aDeposit = new Transaction(amt, this.accountNumber);
+            this.transactions.push(aDeposit);
         } else {
-            console.log('Cannot deposit less than 0')
+            console.log('Cannot deposit less than $0.01')
         }
-        console.log(amt)
+    }
+
+    getTransactions() {
+        return this.transactions;
     }
 }
 
@@ -33,5 +38,17 @@ class Transaction {
     constructor(amount, payee) {
         this.amount = amount;
         this.payee = payee;
+        this.date = new Date();
     }
 }
+
+const lisaAcct = new BankAccount('3456243', 'Lisa');
+console.log('Bank Account Testing:')
+console.log(lisaAcct.deposit(18))
+console.log(lisaAcct.deposit(45))
+console.log(lisaAcct.charge(-22, 'bob'))
+console.log(lisaAcct.charge(99, 'jane'))
+console.log(lisaAcct.balance());
+console.log(lisaAcct.getTransactions())
+
+console.log('End Testing')
